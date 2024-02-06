@@ -5,9 +5,12 @@ import helmet from 'helmet';
 import usersRoutes from './api/routes/users.js';
 import connectDB from './db/mongoose.js';
 import { connectPg,fetchUsers } from './db/postgres.js';
-
+import morganMiddleware from './config/morganMiddleware.js';
 
 const app = express();
+
+// logger
+app.use(morganMiddleware);
 
 // Database
 connectPg()
