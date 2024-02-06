@@ -3,9 +3,16 @@ import cors from 'cors';
 import helmet from 'helmet';
 
 import usersRoutes from './api/routes/users.js';
+import connectDB from './db/mongoose.js';
+import { connectPg,fetchUsers } from './db/postgres.js';
 
 
 const app = express();
+
+// Database
+connectPg()
+connectDB()
+// fetchUsers()
 
 app.use(cors());
 app.use(helmet());
@@ -13,7 +20,7 @@ app.use(helmet());
 app.use(express.json());
 
 // Use the routes
-app.use('/api', usersRoutes);
+app.use('/api/v1', usersRoutes);
 
 app.get('/', (req, res) => {
     res.send('Server is running...');
