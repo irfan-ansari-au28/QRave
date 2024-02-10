@@ -1,8 +1,6 @@
-import { Router } from 'express';
-const router = Router();
-
 import axios from 'axios';
 
+import axios from 'axios';
 
 export const sendOtp = async (mobile) => {
   const options = {
@@ -19,14 +17,13 @@ export const sendOtp = async (mobile) => {
       // For example, "sender", "otp", "otp_expiry", etc.
       Param1: 'value1',
       Param2: 'value2',
-      Param3: 'value3',
+      Param3: 'value3'
     })
   };
 
   try {
     const response = await axios(options);
     console.log(response.data);
-    return response.data;
   } catch (error) {
     console.error('Error sending OTP:', error);
   }
@@ -45,13 +42,3 @@ export const verifyOtp = async (phoneNumber, otp) => {
   return response.data; // Handle verification result
 };
 
-
-
-// Get route for users
-router.get('/users', async (req, res) => {
-  const responseData = await sendOtp('917002729347');
-  console.log('done', responseData)
-  res.send('Users route is working');
-})
-
-export default router;

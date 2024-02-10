@@ -9,6 +9,8 @@ import morganMiddleware from './config/morganMiddleware.js';
 import client from './db/redisClient.js'
 
 const app = express();
+import 'dotenv/config';
+
 
 // logger
 app.use(morganMiddleware);
@@ -23,8 +25,10 @@ dbConnections()
 
 // fetchUsers()
 
-app.use(cors());
-app.use(helmet());
+app.use(cors({
+    origin: 'http://localhost:5000'
+}));
+// app.use(helmet());
 // For parsing application/json
 app.use(express.json());
 
@@ -37,14 +41,14 @@ app.get('/', (req, res) => {
 
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const server = app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 // Graceful shutdown
 process.on('SIGINT', async () => {
     console.log('Shutting down server...');
 
     // Close the Redis connection
-    await redisClient.disconnect();
+    await client.disconnect();
     console.log('Redis client disconnected');
 
     // Stop the server
